@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<html>    
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="">
+        {# <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> #}
+        {# <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet"> #}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+        {% endblock %}
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}           
+        {% endblock %}
+    </head>
+    <body class="flex flex-col min-h-screen font-mono font-bold">
+
+        {% for message in app.flashes('success') %}
+         {% if message matches '/Bienvenue/' %}
+        <div class="alert flex items-center justify-center h-16 text-white text-center bg-gradient-to-r from-blue-600 via-blue-700 to-blue-900">
+            {{ message }}
+        </div>
+            {% else %}
+                <div class="alert alert-success flex items-center justify-center text-center text-white bg-gradient-to-r from-green-500 via-green-500 to-green-700">{{ message }}</div>
+            {% endif %}
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+            <div class="bg-red-600 text-white p-4 rounded flex items-center justify-center text-center">{{ message }}</div>
+        {% endfor %}
+        {% for message in app.flashes('info') %}
+            <div class="bg-yellow-600 text-white p-4 rounded flex items-center justify-center text-center">{{ message }}</div>
+        {% endfor %}
+        <div>  
+            {% if app.request.get('_route') not in ['app_login', 'app_register'] %}  
+                {% include 'partials/header.html.twig' %}        
+            {% endif %}
+        </div>
+        {# -----MODAL THEME----- #}
+        {% if app.request.get('_route') not in ['app_login', 'app_register'] %}
+        {% endif %} 
+
+        {# ------ cursor -------- #}
+        {# <pointer-particles></pointer-particles> #}
+        {# ------ cursor -------- #}
+        <!-- Adjusted the main block here -->
+        <main class="flex-grow flex content-center justify-center items-start">
+            {% block body %}{% endblock %}
+        </main>
+        {% if app.request.get('_route') not in ['app_login', 'app_register'] %}
+            {% include 'partials/footer.html.twig' %}
+        {% endif %}
+        <script src="{{ asset('js/modal.js') }}"></script>
+        <script src="{{ asset('js/navbar.js') }}"></script>
+        {# <script src="{{ asset('js/cursor.js') }}"></script> #}
+        <script src="{{ asset('js/gallery.js') }}"></script>
+        <script src="{{ asset('js/resetbtn.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script></script>      
+    </body>
+</html>
